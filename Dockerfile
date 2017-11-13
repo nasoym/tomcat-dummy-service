@@ -13,5 +13,8 @@ COPY src /spring_service/src
 
 RUN ./gradlew war
 
+EXPOSE 8080
+EXPOSE 8009
+
 RUN cp ./build/libs/spring_service.war /usr/local/tomcat/webapps/hello.war
 
