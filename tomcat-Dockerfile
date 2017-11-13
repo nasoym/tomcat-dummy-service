@@ -1,0 +1,9 @@
+FROM tomcat:8
+
+MAINTAINER Sinan Goo 
+
+# add context to /usr/local/tomcat/webapps
+COPY ./build/libs/tomcat-dummy-service.war /usr/local/tomcat/webapps/hello.war
+
+EXPOSE 8009
+
