@@ -19,4 +19,13 @@
     <url-pattern>/prometheus/</url-pattern>
   </servlet-mapping>
 
+  <filter>
+    <filter-name>alleRequestsMessen2</filter-name>
+    <filter-class>hello.Metrics</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>alleRequestsMessen2</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
 </web-app>
