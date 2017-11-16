@@ -10,6 +10,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
+// public class PrometheusMetricsServlet {
 @WebServlet("/prometheus")
 public class PrometheusMetricsServlet extends MetricsServlet {
 
@@ -19,13 +20,13 @@ public class PrometheusMetricsServlet extends MetricsServlet {
     new TomcatExporter().register();
   }
 
-  @Bean
-  public FilterRegistrationBean alleRequestsMessen2() {
-    final FilterRegistrationBean result = new FilterRegistrationBean();
-    result.setOrder(Integer.MIN_VALUE);
-    result.setFilter(new RequestFilter("requests", "request timings"));
-    result.addUrlPatterns("/*");
-    return result;
-  }
+  // @Bean
+  // public FilterRegistrationBean alleRequestsMessen2() {
+  //   final FilterRegistrationBean result = new FilterRegistrationBean();
+  //   result.setOrder(Integer.MIN_VALUE);
+  //   result.setFilter(new RequestFilter("requests", "request timings"));
+  //   result.addUrlPatterns("#<{(|");
+  //   return result;
+  // }
 
 }

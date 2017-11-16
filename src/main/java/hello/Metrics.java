@@ -7,6 +7,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import io.prometheus.client.filter.MetricsFilter;
 
@@ -14,12 +15,22 @@ import io.prometheus.client.filter.MetricsFilter;
 public class Metrics {
 
   @Bean
-  public ServletRegistrationBean registerPrometheusExporterServlet() {
-    CollectorRegistry.defaultRegistry.clear();
-    ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new MetricsServlet(), "/prometheus");
-    DefaultExports.initialize();
-    return servletRegistrationBean;
+  public FilterRegistrationBean alleRequestsMessen2() {
+    final FilterRegistrationBean result = new FilterRegistrationBean();
+    result.setOrder(Integer.MIN_VALUE);
+    result.setFilter(new RequestFilter("requests", "request timings"));
+    result.setName("requestFilter");
+    result.addUrlPatterns("/*");
+    return result;
   }
+
+  // @Bean
+  // public ServletRegistrationBean registerPrometheusExporterServlet() {
+  //   CollectorRegistry.defaultRegistry.clear();
+  //   ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new MetricsServlet(), "/prometheus");
+  //   DefaultExports.initialize();
+  //   return servletRegistrationBean;
+  // }
 
   // @Bean
   // public FilterRegistrationBean alleRequestsMessen() {
@@ -37,13 +48,23 @@ public class Metrics {
   //   return result;
   // }
 
-  @Bean
-  public FilterRegistrationBean alleRequestsMessen2() {
-    final FilterRegistrationBean result = new FilterRegistrationBean();
-    result.setOrder(Integer.MIN_VALUE);
-    result.setFilter(new RequestFilter("requests", "request timings"));
-    result.addUrlPatterns("/*");
-    return result;
-  }
+  // @Bean
+  // public FilterRegistrationBean alleRequestsMessen2() {
+  //   final FilterRegistrationBean result = new FilterRegistrationBean();
+  //   result.setOrder(Integer.MIN_VALUE);
+  //   result.setFilter(new RequestFilter("requests", "request timings"));
+  //   result.addUrlPatterns("#<{(|");
+  //   return result;
+  // }
+  
+  // @Bean
+  // public FilterRegistrationBean alleRequestsMessen2() {
+  //   final FilterRegistrationBean result = new FilterRegistrationBean();
+  //   result.setOrder(Integer.MIN_VALUE);
+  //   result.setFilter(new RequestFilter("requests", "request timings"));
+  //   result.setName("requestFilter");
+  //   result.addUrlPatterns("#<{(|");
+  //   return result;
+  // }
 
 }

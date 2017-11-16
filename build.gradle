@@ -5,15 +5,18 @@ buildscript {
   repositories {
     mavenLocal()
     mavenCentral()
+    jcenter()
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    classpath("com.bmuschko:gradle-tomcat-plugin:2.4.1")
   }
 }
 
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'com.bmuschko.tomcat'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -25,8 +28,19 @@ repositories {
 
 dependencies {
   compile("org.springframework.boot:spring-boot-starter-web") 
+  // providedRuntime("org.springframework.boot:spring-boot-starter-tomcat") 
+  // compile("org.springframework.boot:spring-boot-starter-tomcat") 
   compile("io.prometheus:simpleclient_servlet:0.0.26")
   compile("io.prometheus:simpleclient_hotspot:0.0.26")
   // compile("io.prometheus:simpleclient_logback:0.0.26")
   // compile("io.prometheus:simpleclient_spring_web:0.0.26")
+  def tomcatVersion = "8.5.16"
+  tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+         "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
+         "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+}
+
+tomcat {
+  httpProtocol = "org.apache.coyote.http11.Http11Nio2Protocol"
+  ajpProtocol = "org.apache.coyote.ajp.AjpNio2Protocol"
 }

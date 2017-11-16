@@ -6,9 +6,8 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>springDispatcher</servlet-name>
-    <url-pattern>/</url-pattern>
+    <url-pattern>/*</url-pattern>
   </servlet-mapping>
-
 
   <servlet>
     <servlet-name>metrics</servlet-name>
@@ -20,11 +19,11 @@
   </servlet-mapping>
 
   <!-- <filter> -->
-  <!--   <filter&#45;name>alleRequestsMessen2</filter&#45;name> -->
-  <!--   <filter&#45;class>hello.Metrics</filter&#45;class> -->
+  <!--   <filter&#45;name>requestFilter</filter&#45;name> -->
+  <!--   <filter&#45;class>hello.RequestFilter</filter&#45;class> -->
   <!-- </filter> -->
   <!-- <filter&#45;mapping> -->
-  <!--   <filter&#45;name>alleRequestsMessen2</filter&#45;name> -->
+  <!--   <filter&#45;name>requestFilter</filter&#45;name> -->
   <!--   <url&#45;pattern>/*</url&#45;pattern> -->
   <!-- </filter&#45;mapping> -->
 
