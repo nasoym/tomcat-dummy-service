@@ -4,15 +4,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
+import java.util.Random;
+
 @RestController
 public class Application {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
+    private int waitMillisecondsMin = 10;
+    private int waitMillisecondsMax = 500;
 
     @RequestMapping("/")
     @ResponseBody
@@ -76,5 +82,33 @@ public class Application {
 
         return "ok";
     }
+
+
+
+    @RequestMapping(value="set_wait", method = RequestMethod.PUT)
+    @ResponseBody
+    public String set_wait(@RequestParam(value="max", required=true) int maxMilliseconds, @RequestParam(value="min", required=true, defaultValue="10") int minMilliseconds) {
+        waitMillisecondsMax = maxMilliseconds;
+        waitMillisecondsMin = minMilliseconds;
+        LOGGER.info("request: set_wait: max: " + maxMilliseconds);
+        LOGGER.info("request: set_wait: min: " + minMilliseconds);
+        return "ok";
+    }
+
+    @RequestMapping(value="get_wait", method = RequestMethod.GET)
+    @ResponseBody
+    public String get_wait() {
+        LOGGER.info("request: get_wait: " + waitMillisecondsMax);
+        Random rand = new Random(System.currentTimeMillis()); 
+        int currentWaitMilliseconds = rand.nextInt((waitMillisecondsMax - waitMillisecondsMin) + 1 ) + waitMillisecondsMin; 
+        try {
+            Thread.sleep(currentWaitMilliseconds);
+        }
+        catch(InterruptedException ex) {
+            // Thread.currentThread().interrupt();
+        }
+        return "waited for (milliseconds): " + currentWaitMilliseconds + "\n";
+    }
+
 
 }
